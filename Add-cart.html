@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>YAY! It's BOGO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #232323;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background: #fff;
+            width: 375px;
+            margin: 40px auto;
+            height: 560px;
+            box-shadow: 0 2px 24px rgba(0, 0, 0, 0.14);
+            padding: 32px 60px 20px 59px;
+        }
+
+        .headline-with-lines {
+            display: flex;
+            align-items: center;
+            width: 100%;
+
+        }
+
+        .headline-with-lines::before,
+        .headline-with-lines::after {
+            content: "";
+            flex: 1;
+            border-top: 0.9px solid #C8C8C8;
+            margin: 0 8.35px 0 7px;
+        }
+
+        .headline-with-lines span {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            color: #FF6B82;
+            text-align: center;
+            background: #fff;
+            padding: 0 8px;
+            letter-spacing: 0.5px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            color: #FF6B82;
+            font-weight: 600;
+            margin-bottom: 19px;
+            font-size: 20px;
+            letter-spacing: 1px;
+            font-style: Semi Bold;
+        }
+
+        .plan {
+            border: 0.9px solid #C8C8C8;
+            margin-bottom: 22px;
+            padding: 20px 16px 16px 16px;
+            display: flex;
+            width: 341px;
+            opacity: 1;
+            align-items: flex-start;
+            position: relative;
+            background: #fff;
+            transition: border 0.2s, background 0.2s;
+        }
+
+        .plan.selected {
+            border: 2px solid #FF6B82;
+            background: #fff6fa;
+            z-index: 1;
+        }
+
+        .plan .most-popular {
+            width: 127px;
+            height: 26px;
+            position: absolute;
+            top: -14px;
+            right: 20px;
+            background: #FF6B82;
+            padding: 2px 18px 4px 18px;
+            border-radius: 0 4px 0 4px;
+            box-shadow: 0 2px 6px rgba(255, 125, 166, 0.13);
+        }
+
+
+        .plan .most-popular-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.5px;
+            text-align: center;
+            padding: 6px 11px 5px 11px;
+        }
+
+        .plan input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 14.46px;
+            height: 14.46px;
+            border: 0.9px solid #DADADA;
+            border-radius: 50%;
+            background: #fff;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0.9px #DADADA;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="radio"]:checked {
+            border: 0px solid #FF6B82;
+            background: #fff;
+            box-shadow: 0 0 0 2px #FF6B82;
+        }
+
+        input[type="radio"]::before {
+            content: '';
+            display: block;
+            width: 9.04px;
+            height: 9.04px;
+            margin: 3px auto;
+            border-radius: 50%;
+            background: transparent;
+            transition: background 0.2s;
+        }
+
+        input[type="radio"]:checked::before {
+            background: #FF6B82;
+        }
+
+        .plan-details {
+            flex: 1;
+            margin-left: 14px;
+            min-width: 0;
+        }
+
+        .plan-title {
+            color: #232323;
+            font-weight: 600;
+            font-style: Semi Bold;
+            font-size: 14px;
+            line-height: 100%;
+            letter-spacing: 0%;
+
+        }
+
+        .badge {
+            background: #FF6B82;
+            color: #fff;
+
+            padding: 2px 10px;
+            margin-left: 8px;
+
+
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-style: Regular;
+            font-size: 12px;
+            line-height: 100%;
+            letter-spacing: 0%;
+            text-align: center;
+
+        }
+
+        .plan-desc {
+
+            margin-top: 2px;
+            margin-bottom: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-style: Regular;
+            font-size: 12px;
+            line-height: 100%;
+            letter-spacing: 0%;
+
+        }
+
+        .plan-price {
+            text-align: right;
+            min-width: 120px;
+            margin-left: 12px;
+        }
+
+        .plan-price .current {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 14.46px;
+            font-style: normal;
+            line-height: 100%;
+            letter-spacing: 0;
+        }
+
+        .plan-price .old {
+            text-decoration: line-through;
+            color: #000000;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 14.46px;
+            font-style: normal;
+            line-height: 100%;
+            letter-spacing: 0;
+            opacity: 30%;
+            display: block;
+        }
+
+        .options-row {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 4px;
+        }
+
+        .options-row label {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 2px;
+            display: block;
+        }
+
+        .options-row select {
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            background: #fff;
+
+        }
+
+        .options-table {
+            margin-top: 8px;
+            margin-bottom: 2px;
+
+        }
+
+        .options-table th {
+            font-size: 10px;
+            padding: 2px 8px;
+            text-align: left;
+            width: 2px;
+            height: 25.306488037109375px;
+            top: 264.05px;
+            left: 125.23px;
+            opacity: 1;
+            border-width: 0.9px;
+            border-radius: 1.81px;
+
+
+        }
+
+        .options-table th {
+            color: #888;
+            font-weight: 400;
+        }
+
+        .td-unit {
+            color: #232323;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-style: Regular;
+            font-size: 10px;
+            line-height: 100%;
+            letter-spacing: 0%;
+        }
+
+        #size1,
+        #size2 {
+            width: 65.98px;
+            border-color: #D9D9D9;
+            height: 25.31px;
+            opacity: 1;
+            border-width: 0.9px;
+            border-radius: 1.81px;
+            font-weight: 400;
+            font-size: 10.85px;
+            margin-right: 7.23px;
+        }
+
+        #color1,
+        #color2 {
+            width: 72.30425262451172px;
+            height: 25.306488037109375px;
+            border-color: #D9D9D9;
+            opacity: 1;
+            border-width: 0.9px;
+            border-radius: 1.81px;
+            padding: 6.23px 20.75px 4.8px 2.23px;
+            font-weight: 400;
+            font-size: 10.85px;
+
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            font-size: 16px;
+        }
+
+        .footer .free-delivery {
+            color: #FF6B82;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .footer .total #total-price {
+
+            color: #232323;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-style: Regular;
+            font-size: 14px;
+            line-height: 100%;
+            letter-spacing: 0%;
+
+        }
+
+        .footer .total #total-price2 {
+
+            color: #232323;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-style: Medium;
+            font-size: 14px;
+            line-height: 100%;
+            letter-spacing: 0%;
+            margin-left: -4px;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: #FF6B82;
+            color: #fff;
+            border: none;
+            font-weight: 500;
+            border-radius: 4px;
+            font-size: 12px;
+            padding: 14px 0;
+            margin-top: 12.5px;
+            cursor: pointer;
+            transition: background 0.2s;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 10px rgba(255, 125, 166, 0.07);
+        }
+
+        .add-to-cart:hover {
+            background: #FF6B82;
+        }
+
+        .powered {
+            text-align: right;
+            color: #bbb;
+            font-size: 12px;
+            margin-top: 5px;
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .plusImg {
+            width: 9.34px;
+            height: 9.34px;
+            opacity: 1;
+            border-width: 2px;
+
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .container {
+                width: 98vw;
+                padding: 18px 2vw 12px 2vw;
+            }
+
+            .plan-price {
+                min-width: 80px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+    <div class="content">
+        <div class="headline-with-lines">
+            <h2>YAY! It's BOGO</h2>
+        </div>
+        <form id="plans-form">
+            <!-- 1 Unit Plan -->
+            <div class="plan selected" data-index="0">
+                <input type="radio" name="plan" id="plan1" value="1" checked>
+                <div class="plan-details">
+                    <span class="plan-title">1 Unit</span>
+                    <span class="badge">10% Off</span>
+                    <div class="plan-desc">Standard Price</div>
+                </div>
+                <div class="plan-price">
+                    <span class="current">$10.00 USD</span>
+                    <span class="old">$24.00 USD</span>
+                </div>
+            </div>
+            <!-- 2 Unit Plan -->
+            <div class="plan" data-index="1">
+                <input type="radio" name="plan" id="plan2" value="2">
+                <div class="plan-details">
+                    <span class="plan-title">2 Unit</span>
+                    <span class="badge">20% Off</span>
+                    <div class="options-table">
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>Size</th>
+                                <th>Colour</th>
+                            </tr>
+                            <tr>
+                                <td class="td-unit">#1</td>
+                                <td class="td-unit-box">
+                                    <select id="size1">
+                                        <option>S</option>
+                                        <option>M</option>
+                                        <option>L</option>
+                                    </select>
+                                </td>
+                                <td class="td-unit-box">
+                                    <select id="color1">
+                                        <option>Black</option>
+                                        <option>White</option>
+                                        <option>Pink</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-unit">#2</td>
+                                <td>
+                                    <select id="size2">
+                                        <option>S</option>
+                                        <option>M</option>
+                                        <option>L</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="color2">
+                                        <option>Black</option>
+                                        <option>White</option>
+                                        <option>Pink</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="plan-price">
+                    <span class="current">$18.00 USD</span>
+                    <span class="old">$24.00 USD</span>
+                </div>
+                <div class="most-popular">
+                    <span class="most-popular-text">MOST POPULAR</span>
+                </div>
+            </div>
+            <!-- 3 Unit Plan -->
+            <div class="plan" data-index="2">
+                <input type="radio" name="plan" id="plan3" value="3">
+                <div class="plan-details">
+                    <span class="plan-title">3 Unit</span>
+                    <span class="badge">30% Off</span>
+                </div>
+                <div class="plan-price">
+                    <span class="current">$24.00 USD</span>
+                    <span class="old">$24.00 USD</span>
+                </div>
+            </div>
+        </form>
+        <div class="footer">
+            <span class="free-delivery">Free Delivery</span>
+            <span class="total">Total : <span id="total-price">$10</span> <span id="total-price2">.00 USD</span></span>
+        </div>
+        <button class="add-to-cart"><img src="./assests/plus.png" alt="addCart" class="plusImg" /> Add to Cart</button>
+        <div class="powered">@ Powered by Pumper</div>
+    </div>
+    </div>
+    <script>
+        // Plan pricing data
+        const planTotals = [
+            "$10",
+            "$18",
+            "$24"
+        ];
+
+        // Plan selection logic
+        const plans = document.querySelectorAll('.plan');
+        const radios = document.querySelectorAll('input[type="radio"][name="plan"]');
+        const totalPrice = document.getElementById('total-price');
+
+        radios.forEach((radio, idx) => {
+            radio.addEventListener('change', () => {
+                plans.forEach(plan => plan.classList.remove('selected'));
+                plans[idx].classList.add('selected');
+                totalPrice.textContent = planTotals[idx];
+            });
+        });
+
+        // Also allow clicking anywhere on the plan to select it
+        plans.forEach((plan, idx) => {
+            plan.addEventListener('click', (e) => {
+                // Don't trigger if clicking on a select element
+                if (e.target.tagName.toLowerCase() === 'select') return;
+                if (!radios[idx].checked) {
+                    radios[idx].checked = true;
+                    radios[idx].dispatchEvent(new Event('change'));
+                }
+            });
+        });
+
+        // Prevent select inside plan from triggering plan selection
+        document.querySelectorAll('select').forEach(sel => {
+            sel.addEventListener('click', e => e.stopPropagation());
+        });
+    </script>
+</body>
+
+</html>
